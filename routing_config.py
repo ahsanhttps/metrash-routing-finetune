@@ -62,12 +62,55 @@ def format_router_prompt(
     return prompt
 
 
+def configure_tokenizer_for_generation(tokenizer) -> None:
+    """Gemma needs a pad token for batch generation; avoid unset pad_token_id warnings."""
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.pad_token_id = tokenizer.eos_token_id
+
+
+def resolve_inference_device(model, device: str | None = None) -> str:
+    if device is not None:
+        return device
+    return str(next(model.parameters()).device)
+
+
 def prepare_model_inputs(tokenizer, prompt: str, device: str = "cuda"):
+    configure_tokenizer_for_generation(tokenizer)
     return tokenizer([prompt], return_tensors="pt").to(device)
 
 
 def decode_model_output(tokenizer, token_ids, skip_special_tokens: bool = True) -> str:
     return tokenizer.decode(token_ids, skip_special_tokens=skip_special_tokens)
+
+
+def generate_router_completion(
+    model,
+    tokenizer,
+    query: str,
+    *,
+    max_new_tokens: int = 32,
+    min_new_tokens: int = 1,
+    device: str | None = None,
+) -> str:
+    """Run greedy decoding for one routing query; returns only the new completion text."""
+    device = resolve_inference_device(model, device)
+    prompt = format_router_prompt(tokenizer, query)
+    inputs = prepare_model_inputs(tokenizer, prompt, device=device)
+    input_len = inputs["input_ids"].shape[1]
+
+    output_ids = model.generate(
+        **inputs,
+        max_new_tokens=max_new_tokens,
+        min_new_tokens=min_new_tokens,
+        max_length=None,
+        do_sample=False,
+        use_cache=True,
+        pad_token_id=tokenizer.pad_token_id,
+        eos_token_id=tokenizer.eos_token_id,
+    )
+    new_token_ids = output_ids[0, input_len:]
+    return decode_model_output(tokenizer, new_token_ids)
 
 
 def parse_department_tag(text: str) -> str | None:

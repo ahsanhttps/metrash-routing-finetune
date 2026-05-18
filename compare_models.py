@@ -14,10 +14,8 @@ from routing_config import (
     LORA_DIR,
     MODEL_NAME,
     TEST_QUESTIONS_PATH,
-    decode_model_output,
-    format_router_prompt,
+    generate_router_completion,
     parse_department_tag,
-    prepare_model_inputs,
 )
 
 
@@ -45,16 +43,7 @@ def attach_lora(model, lora_path: str):
 
 @torch.inference_mode()
 def predict_department(model, tokenizer, query: str, max_new_tokens: int = 32) -> tuple[str | None, str]:
-    prompt = format_router_prompt(tokenizer, query)
-    inputs = prepare_model_inputs(tokenizer, prompt, device=str(model.device))
-    output_ids = model.generate(
-        **inputs,
-        max_new_tokens=max_new_tokens,
-        do_sample=False,
-        temperature=0.0,
-        use_cache=True,
-    )
-    generated = decode_model_output(tokenizer, output_ids[0, inputs["input_ids"].shape[1] :])
+    generated = generate_router_completion(model, tokenizer, query, max_new_tokens=max_new_tokens)
     return parse_department_tag(generated), generated.strip()
 
 
