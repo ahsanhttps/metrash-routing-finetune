@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "query": "How long does it usually take?",
+    "expected": "visa",
+    "note": "Vague timeline question after visa/permit submission"
+  },
+  {
+    "id": 2,
+    "query": "Is my stuff ready yet? I submitted everything last week at the visa center.",
+    "expected": "visa",
+    "note": "Sounds general; refers to Qatar Visa Center application status"
+  },
+  {
+    "id": 3,
+    "query": "They told me to come back tomorrow with the original at MOI.",
+    "expected": "residency",
+    "note": "Generic follow-up; typically QID/residency document resubmission"
+  },
+  {
+    "id": 4,
+    "query": "My QID number is not showing in Metrash2.",
+    "expected": "residency",
+    "note": "Could sound like IT support; Metrash2 file lookup is residency"
+  },
+  {
+    "id": 5,
+    "query": "I moved to a new villa in Al Wakrah and need to update my details.",
+    "expected": "residency",
+    "note": "Sounds like a profile change; address/residency update in Qatar"
+  },
+  {
+    "id": 6,
+    "query": "Can I use this paper to drive until my appointment?",
+    "expected": "traffic",
+    "note": "Ambiguous document question; temporary driving permission in Qatar"
+  },
+  {
+    "id": 7,
+    "query": "The camera on Salwa Road caught me yesterday.",
+    "expected": "traffic",
+    "note": "No mention of fines; clearly a Qatar traffic camera violation"
+  },
+  {
+    "id": 8,
+    "query": "How do I clear the points on my MOI record?",
+    "expected": "traffic",
+    "note": "Could sound legal/general; traffic points in Qatar"
+  },
+  {
+    "id": 9,
+    "query": "My kafeel terminated my contract last Friday.",
+    "expected": "visa",
+    "note": "Sounds like HR; triggers visa cancellation or status change in Qatar"
+  },
+  {
+    "id": 10,
+    "query": "I want my parents to visit me in Doha.",
+    "expected": "visa",
+    "note": "Family visit framed casually without saying visa"
+  },
+  {
+    "id": 11,
+    "query": "You still have my passport with you from last week.",
+    "expected": "visa",
+    "note": "Generic document wording; passport held for visa processing"
+  },
+  {
+    "id": 12,
+    "query": "The sticker on my windshield is peeling off.",
+    "expected": "traffic",
+    "note": "Sounds like maintenance; Istimara/vehicle registration sticker"
+  },
+  {
+    "id": 13,
+    "query": "I'm joining a new company in Lusail next month.",
+    "expected": "visa",
+    "note": "Career update; implies visa transfer or new work permit"
+  },
+  {
+    "id": 14,
+    "query": "My flat contract ends in two weeks in The Pearl.",
+    "expected": "residency",
+    "note": "Housing question; tenancy ties to residency updates in Qatar"
+  },
+  {
+    "id": 15,
+    "query": "I got an SMS about something I did on the road near West Bay.",
+    "expected": "traffic",
+    "note": "Vague SMS; traffic fine/violation notification"
+  }
+]
